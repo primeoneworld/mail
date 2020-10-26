@@ -14,7 +14,7 @@ def help_command(update, context):
     update.message.reply_text("Hit /generate to get an email.\nOr use an existing/customized mail with the following domains '@wwjmp.com', '@1secmail.com', '@esiix.com' along with /get_msg. \nExample: '/get_msg yourusername@esiix.com'")
 
 def gen_command(update, context):
-    r = requests.get("https://virajapi.herokuapp.com/mail/gen/").json()
+    r = requests.get("https://virajapi.vercel.app/mail/gen/").json()
     global email
     email = r["mail"]
     update.message.reply_text("Your instant mail is: " +email)
@@ -22,7 +22,7 @@ def gen_command(update, context):
 def get_msg(update, context):
     if len(update.message.text)>9:
         new = update.message.text[9:]
-        url2 = requests.get(f"https://virajapi.herokuapp.com/mail/msg/?email={new}").json()
+        url2 = requests.get(f"https://virajapi.vercel.app/mail/msg/?email={new}").json()
         if len(url2) == 0:
             update.message.reply_text("No Messages Yet")
         else:
@@ -31,7 +31,7 @@ def get_msg(update, context):
                                       "Subject: " +url2["msg1"]["subject"]+"\n"+
                                       "Message: " +url2["msg1"]["textBody"])
     elif email != None:
-        url = requests.get(f"https://virajapi.herokuapp.com/mail/msg/?email={email}").json()
+        url = requests.get(f"https://virajapi.vercel.app/mail/msg/?email={email}").json()
         if len(url) == 0:
             update.message.reply_text("No Messages Yet")
         else:
